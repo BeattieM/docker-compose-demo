@@ -32,23 +32,22 @@ App.messages = App.cable.subscriptions.create('PostsChannel', {
 
   renderPost: function(data) {
     var uuid = data.post.uuid;
-    var post = `
-      <div class='post' id='`+uuid+`'>
-        <div class='post-pokemon'>
-          <img src='`+data.sprite+`'>
-        </div>
-        <div class='post-content'>
-          <p class='date'>
-            `+moment(data.post.created_at).format('D MMM YYYY');
+    var post = "<div class='post' id='"+uuid+"'>"+
+        "<div class='post-pokemon'>"+
+          "<img src='"+data.sprite+"'>"+
+        "</div>"+
+        "<div class='post-content'>"+
+          "<p class='date'>"+
+            moment(data.post.created_at).format('D MMM YYYY');
     if($("#current_user").attr('class') == data.post.user_id){
-      post += `<span class='controls'>
-                  <button class="astext edit-post" value='`+uuid+`'>edit</button> - <button class="astext delete-post" value='`+uuid+`'>delete</button>
-                <span>`
+      post += "<span class='controls'>"+
+                  "<button class='astext edit-post' value='"+uuid+"'>edit</button> - <button class='astext delete-post' value='"+uuid+"'>delete</button>"+
+                "<span>"
     }
-    post += `</p>
-              <p id='post_`+uuid+`_comment'>`+data.post.comment+`</p>
-            </div>
-          </div>`;
+    post += "</p>"+
+              "<p id='post_"+uuid+"_comment'>"+data.post.comment+"</p>"+
+            "</div>"+
+          "</div>";
     return post;
   },
 
