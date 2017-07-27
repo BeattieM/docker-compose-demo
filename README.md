@@ -1,5 +1,5 @@
 # docker-compose-demo
-Demo rails app to try out docker-compose
+This is a rebuild of a previous demo application where I will be replacing the front-end with React and moving the Rails portion in to a separate Api repo.
 
 ## Running the project
 This project utilizes the latest versions of Docker and Docker Compose. Please make sure your system is at least somewhat up to date with the most recent version of both.
