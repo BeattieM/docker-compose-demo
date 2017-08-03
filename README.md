@@ -1,5 +1,20 @@
-# docker-compose-demo
-This is a rebuild of a previous demo application where I will be replacing the front-end with React and moving the Rails portion in to a separate Api repo.
+# React and Rails in Docker
+This is a rebuild of my previous demo application [Twittermon](https://github.com/BeattieM/twittermon) where I will be replacing the front-end with React and moving the Rails portion in to the [Reactive API](https://github.com/BeattieM/reactive-api). repo.
+
+## Original Requirements
+
+- Posts
+  - Users should be able to submit posts that are stored to a database.
+  - All posts should be displayed in a feed on the home page.
+  - You can optionally implement update and delete functionality **[optional]**.
+  - Customizing the feed depending on user account is **not** required.
+- External Data
+  - Users are anonymized, so each time a post is submitted, a random Pokemon is assigned to the post and shows up as the username.
+  - Make a call to the Pokemon API when each post is created to select a random Pokemon name: http://pokeapi.co/ 
+- Authentication **[optional]**
+  - Users should be able to create an account, login, and logout.
+  - Account management features, like updating email or password, are **not** needed.
+  - Posts should still be viewable to anonymous users.
 
 ## Running the project
 This project utilizes the latest versions of Docker and Docker Compose. Please make sure your system is at least somewhat up to date with the most recent version of both.
@@ -22,23 +37,3 @@ At this point you should be able to view the project at `localhost:3000`. Simply
 
 **Subsequent restarts:**
 - `docker-compose up`
-
-## Running the test
-Testing is composed of RSpec tests with coverage visible via SimpleCov.  
-
-Call `docker-compose run web rspec` to run the tests and then open up `coverage/index.html` in your browser to view the coverage results
-
-## Running the linters
-Linting of this project is composed of a set of 5 linters run in sequence: Rails Best Practices, RuboCop, Reek, Flog, Flay.  
-To run all of the linters simply call `docker-compose run web ./lint`
-
-## Bonus feature: WebSockets
-In order to simulate a realistic environment with several users you can open up the project in multiple separate browser windows and see new posts being dynamically added to the view.
-
-## Future improvements
-- Add infinite scroll
-- Add Pokemon API caching
-  - Cache API calls(Varnish)
-  - Cache Pokemon images(S3)
-- Move PokemonService to background task(due to slow API)
-- Replace front-end with Angular/React and convert project to Rails API
