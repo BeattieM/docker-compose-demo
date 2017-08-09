@@ -11,7 +11,8 @@ class SignIn extends Component {
 
   onSubmit(user_data) {
     axios.post(`${endpoints.API_BASE}${endpoints.SIGN_IN}`, {
-      user: user_data
+      email: user_data.email,
+      password: user_data.password,
     }).then(res => {
       this.props.signIn(res.data);
       browserHistory.push('/');
@@ -27,7 +28,7 @@ class SignIn extends Component {
           <img id="img_logo" src="/images/pokeball.png" />
         </div>
         <div id="div-forms">
-          <form>
+          <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
             <div className="modal-body">
               <Field name="email" type="email"
                 component={renderField} label="Email"

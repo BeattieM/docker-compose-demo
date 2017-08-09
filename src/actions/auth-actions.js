@@ -15,3 +15,10 @@ export function signIn(token_data) {
     payload: token_data
   };
 }
+
+export function signOut() {
+  return {
+    type: types.SIGN_OUT,
+    payload: null
+  };
+}

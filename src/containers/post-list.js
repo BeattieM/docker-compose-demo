@@ -3,20 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import { fetchPosts, receivePost } from "../actions/post-actions";
+import { signOut } from "../actions/auth-actions";
 import { Link } from 'react-router';
 import ActionCable from 'actioncable';
+import { browserHistory } from 'react-router';
 
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
 class PostList extends Component {
   componentDidMount() {
     this.props.fetchPosts();
+    this.handleClick = this.handleClick.bind(this);
     cable.subscriptions.create('PostsChannel', { 
       props: this.props,
       received: function(data) {
         this.props.receivePost(data);
       }
     });
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.props.signOut();
+    browserHistory.push('/');
   }
 
   renderPost(postData) {
@@ -40,7 +49,7 @@ class PostList extends Component {
   render() {
     let button = <Link to="/sign_in" className = "btn btn-success log-button">Sign In</Link>;
     if(localStorage.getItem('access_token')){
-      button = <Link to="/sign_out" className = "btn btn-success log-button">Sign Out</Link>;
+      button = <Link to="/sign_out" className = "btn btn-success log-button" onClick={this.handleClick}>Sign Out</Link>;
     }
     return (
       <div>
@@ -77,7 +86,7 @@ function mapStateToProps({ posts }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchPosts, receivePost }, dispatch);
+  return bindActionCreators({ fetchPosts, receivePost, signOut }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostList);
