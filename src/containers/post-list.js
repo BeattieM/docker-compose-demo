@@ -20,6 +20,9 @@ class PostList extends Component {
         this.props.receivePost(data);
       }
     });
+    $("#post_comment").focus(function() {
+      $("#submit-post").show();
+    });
   }
 
   handleClick(e) {
@@ -46,11 +49,32 @@ class PostList extends Component {
     );
   }
 
+  renderCreateForm() {
+    return (
+      <div>
+        <div className='post-pokemon'>
+          <img id="pokeball" src="/images/pokeball.png" />
+        </div>
+        <div className='post-content'>
+          <form>
+            <textarea placeholder="What's happening?" rows="1" maxLength="140" id="post_comment" style={{}}/>
+            <input type="submit" id="submit-post" disabled="true" value="Sign post" className="btn btn-success" />
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   render() {
     let button = <Link to="/sign_in" className = "btn btn-success log-button">Sign In</Link>;
+    let createForm = null;
+    let loggedIn = null;
     if(localStorage.getItem('access_token')){
       button = <Link to="/sign_out" className = "btn btn-success log-button" onClick={this.handleClick}>Sign Out</Link>;
+      createForm = this.renderCreateForm();
+      loggedIn="logged-in";
     }
+
     return (
       <div>
         <div className="banner-spacer spacer-top">
@@ -61,7 +85,9 @@ class PostList extends Component {
         </div>
         <div className="banner-spacer spacer-bottom"></div>
         <div id="content">
-          <div id="content-header"></div>
+          <div id="content-header" className={loggedIn}>
+            {createForm}
+          </div>
           <span id="current_user" className="0"></span>
           <div id="posts">
              {this.props.posts.map(this.renderPost)}
