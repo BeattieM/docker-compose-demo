@@ -7,6 +7,7 @@ import { signOut } from "../actions/auth-actions";
 import { Link } from 'react-router';
 import ActionCable from 'actioncable';
 import { browserHistory } from 'react-router';
+import PostCreateForm from '../components/post-create-form';
 
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
@@ -19,9 +20,6 @@ class PostList extends Component {
       received: function(data) {
         this.props.receivePost(data);
       }
-    });
-    $("#post_comment").focus(function() {
-      $("#submit-post").show();
     });
   }
 
@@ -71,7 +69,7 @@ class PostList extends Component {
     let loggedIn = null;
     if(localStorage.getItem('access_token')){
       button = <Link to="/sign_out" className = "btn btn-success log-button" onClick={this.handleClick}>Sign Out</Link>;
-      createForm = this.renderCreateForm();
+      createForm = <PostCreateForm />
       loggedIn="logged-in";
     }
 

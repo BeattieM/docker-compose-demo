@@ -1,7 +1,6 @@
 import axios from 'axios';
 import * as types from '../constants/action-types';
 import * as endpoints from '../constants/endpoints';
-// import mockPosts from '../reducers/mock-posts';
 
 export function fetchPosts() {
   const request = axios.get(`${endpoints.API_BASE}${endpoints.POSTS}`);
@@ -19,9 +18,13 @@ export function receivePost(new_post) {
 }
 
 export function createPost(new_post) {
+  const request = axios.post(`${endpoints.API_BASE}${endpoints.POSTS}`,
+    { post: new_post},
+    { headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
+  });
   return {
     type: types.CREATE_POST,
-    payload: new_post
+    payload: request
   };
 }
 
