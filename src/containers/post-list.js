@@ -8,6 +8,7 @@ import { Link } from 'react-router';
 import ActionCable from 'actioncable';
 import { browserHistory } from 'react-router';
 import PostCreateForm from '../components/post-create-form';
+import Post from '../components/post';
 
 const cable = ActionCable.createConsumer('ws://localhost:3000/cable')
 
@@ -30,35 +31,9 @@ class PostList extends Component {
   }
 
   renderPost(postData) {
-    const id = postData.id;
-    const sprite = postData.attributes.sprite;
-    const comment = postData.attributes.comment;
-
     return (
-      <div className='post' id={id} key={id}>
-        <div className='post-pokemon'>
-          <img src={sprite} />
-        </div>
-        <div className='post-content'>
-          <p className='date'>Coming soon</p>
-          <p id={`post_${id}_comment`}>{comment}</p>
-        </div>
-      </div>
-    );
-  }
-
-  renderCreateForm() {
-    return (
-      <div>
-        <div className='post-pokemon'>
-          <img id="pokeball" src="/images/pokeball.png" />
-        </div>
-        <div className='post-content'>
-          <form>
-            <textarea placeholder="What's happening?" rows="1" maxLength="140" id="post_comment" style={{}}/>
-            <input type="submit" id="submit-post" disabled="true" value="Sign post" className="btn btn-success" />
-          </form>
-        </div>
+      <div className='post' id={postData.id} key={postData.id}>
+        <Post post_id={postData.id} sprite={postData.attributes.sprite} comment={postData.attributes.comment} created_at={postData.attributes['created-at']}/>
       </div>
     );
   }
